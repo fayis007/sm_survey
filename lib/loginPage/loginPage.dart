@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:smsurvay/Ui/homePage/homePage.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({Key? key}) : super(key: key);
@@ -9,15 +10,6 @@ class loginPage extends StatefulWidget {
 }
 
 class _loginPageState extends State<loginPage> {
-  String dropdownvalue = 'panchayat_1';
-  var listofpanjayath = [
-    'panchayat_1',
-    'panchayat_2',
-    'panchayat_3',
-    'panchayat_4',
-    'panchayat_5',
-    'panchayat_6'
-  ];
 
   bool isChecked = false;
   final _consumernumbercontroller = TextEditingController();
@@ -68,9 +60,7 @@ class _loginPageState extends State<loginPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    'Sign With Username or email and \npassword to use your account',
-                                  ),
+
                                   const SizedBox(
                                     height: 20,
                                   ),
@@ -114,7 +104,7 @@ class _loginPageState extends State<loginPage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text("Select Block"),
+                                        Text("Select BG"),
                                         GestureDetector(
                                             child: Image.asset(
                                                 "assets/icons/SelectComplaint.png"))
@@ -130,29 +120,32 @@ class _loginPageState extends State<loginPage> {
                       )),
                   Container(
                     decoration: BoxDecoration(
-                      gradient: LinearGradient( colors: <Color>[
+                        gradient: LinearGradient(colors: <Color>[
                           Color(0xff32b4cf),
-                        Color(0xff056782)]),
+                          Color(0xff056782)
+                        ]),
                         boxShadow: [
-                      BoxShadow(
-                          blurRadius: 11.5,
-                          color: Colors.grey,
-                          offset: Offset(7, 7))
-                    ], borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                          BoxShadow(
+                              blurRadius: 11.5,
+                              color: Colors.grey,
+                              offset: Offset(7, 7))
+                        ],
+                        borderRadius: BorderRadius.all(Radius.circular(30.0))),
                     child: FlatButton(
                         height: 60,
                         minWidth: 170,
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(30.0)),
                         //color: Colors.lightBlueAccent,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+                        },
                         child: Text(
                           "Proceed",
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                             fontSize: 19.5
-                            ),
+                              fontSize: 19.5),
                         )),
                   )
                 ],
