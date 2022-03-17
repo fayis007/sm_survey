@@ -129,7 +129,11 @@ class _loginPageState extends State<loginPage> {
                         ],
                       )),
                   Container(
-                    decoration: BoxDecoration(boxShadow: [
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient( colors: <Color>[
+                          Color(0xff32b4cf),
+                        Color(0xff056782)]),
+                        boxShadow: [
                       BoxShadow(
                           blurRadius: 11.5,
                           color: Colors.grey,
@@ -140,7 +144,7 @@ class _loginPageState extends State<loginPage> {
                         minWidth: 170,
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(30.0)),
-                        color: Colors.lightBlueAccent,
+                        //color: Colors.lightBlueAccent,
                         onPressed: () {},
                         child: Text(
                           "Proceed",
