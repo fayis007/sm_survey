@@ -40,7 +40,7 @@ class _splash_screenState extends State<splash_screen> {
                     alignment: Alignment.center,
                     child: Center(
                         child: Image.asset(
-                          "assets/icons/smpay_intro_logo.png",
+                          "assets/icons/smartsurveyicon.png",
 
                         ))),
               ),
