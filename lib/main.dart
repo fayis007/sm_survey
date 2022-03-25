@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smsurvay/Ui/homePage/ConsumerPage.dart';
+import 'package:smsurvay/Ui/homePage/DetailsPage.dart';
 
-import 'package:smsurvay/Ui/homePage/DetailsPage2.dart';
+
 import 'package:smsurvay/Ui/homePage/homePage.dart';
 import 'package:smsurvay/Ui/splashScreen.dart';
 import 'package:smsurvay/Ui/verified.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-    home: const splash_screen() ,
+    home: const splash_screen(),
 
     );
   }

@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smsurvay/Ui/homePage/ConsumerPage.dart';
 
-import 'package:smsurvay/Ui/homePage/DetailsPage2.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:smsurvay/Ui/verified.dart';
 import 'package:smsurvay/loginPage/loginPage.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+
+  const HomePage({Key? key, }) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+
   void _getFromCamera() async {
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.camera,
@@ -25,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   final formkey = GlobalKey<FormState>();
-  final _housecontroller = TextEditingController();
+  final housecontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -75,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 26),
                       cursorHeight: 30,
-                      controller: _housecontroller,
+                      controller: housecontroller,
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: const BorderRadius.all(
@@ -133,12 +135,13 @@ class _HomePageState extends State<HomePage> {
                             FlatButton(
                                 color: Color(0xff056782),
                                 onPressed: () {
+                                  k=1;
                                   if (formkey.currentState!.validate()) {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ConsumerPage()));
+                                                ConsumerPage(houseno: housecontroller.text,isjalacustomer: k.toString(),needconnection: m.toString(),)));
                                   }
                                 },
                                 child: Text(
@@ -149,6 +152,7 @@ class _HomePageState extends State<HomePage> {
                             FlatButton(
                                 color: Color(0xff32b4cf),
                                 onPressed: () async {
+                                  k=0;
                                   if(formkey.currentState!.validate()){
                                     bool result = await showDialog(
                                         context: context,
@@ -166,6 +170,7 @@ class _HomePageState extends State<HomePage> {
                                               FlatButton(
                                                   color: Color(0xff056782),
                                                   onPressed: () {
+                                                    m=1;
                                                     Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
@@ -184,6 +189,7 @@ class _HomePageState extends State<HomePage> {
                                               FlatButton(
                                                   color: Color(0xff32b4cf),
                                                   onPressed: () {
+                                                    m=0;
                                                     Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
@@ -231,5 +237,8 @@ class _HomePageState extends State<HomePage> {
       margin: EdgeInsets.all(10),
       content: Text("hello"),
     ));
+
   }
+  int? k ;
+int? m;
 }

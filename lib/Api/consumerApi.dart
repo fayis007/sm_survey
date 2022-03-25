@@ -1,27 +1,27 @@
 class model_consumer {
   String? _status;
-  List<consumerData>? _data;
+  List<consumerData>? consumerDetails;
 
   model_consumer({String? status, List<consumerData>? data}) {
     if (status != null) {
       this._status = status;
     }
     if (data != null) {
-      this._data = data;
+      this.consumerDetails = data;
     }
   }
 
   String? get status => _status;
   set status(String? status) => _status = status;
-  List<consumerData>? get data => _data;
-  set data(List<consumerData>? data) => _data = data;
+  List<consumerData>? get data => consumerDetails;
+  set data(List<consumerData>? data) => consumerDetails = data;
 
   model_consumer.fromJson(Map<String, dynamic> json) {
     _status = json['Status'];
     if (json['data'] != null) {
-      _data = <consumerData>[];
+      consumerDetails = <consumerData>[];
       json['data'].forEach((v) {
-        _data!.add(new consumerData.fromJson(v));
+        consumerDetails!.add(new consumerData.fromJson(v));
       });
     }
   }
@@ -29,8 +29,8 @@ class model_consumer {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['Status'] = this._status;
-    if (this._data != null) {
-      data['data'] = this._data!.map((v) => v.toJson()).toList();
+    if (this.consumerDetails != null) {
+      data['data'] = this.consumerDetails!.map((v) => v.toJson()).toList();
     }
     return data;
   }

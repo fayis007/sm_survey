@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+
   lottie: ^1.2.2
   http: ^0.13.4
   dropdown_formfield: ^0.1.4

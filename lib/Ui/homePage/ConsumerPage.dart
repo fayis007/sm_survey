@@ -4,17 +4,76 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smsurvay/Api/consumerApi.dart';
 
-import 'package:smsurvay/Ui/homePage/DetailsPage2.dart';
 import 'package:http/http.dart' as http;
+import 'package:smsurvay/Ui/homePage/DetailsPage.dart';
 
 class ConsumerPage extends StatefulWidget {
-  const ConsumerPage({Key? key}) : super(key: key);
+  final String? isjalacustomer;
+  final String? needconnection;
+  final String? houseno;
+  const ConsumerPage(
+      {Key? key, this.houseno, this.isjalacustomer, this.needconnection})
+      : super(key: key);
 
   @override
   _ConsumerPageState createState() => _ConsumerPageState();
 }
 
 class _ConsumerPageState extends State<ConsumerPage> {
+  void consumercall(String cosumerNo) {
+    consumerdetailscall(cosumerNo);
+  }
+
+  void consumerdetailscall(String cosu) async {
+    await ConsumerApiCalling(cosu);
+  }
+
+  String? _id;
+  String? _name;
+  String? _address;
+  String? _mobile;
+  String? _location;
+  String? _category;
+  String? _meterNumber;
+  List<consumerData>? consumerDetails = [];
+
+  String url = "https://smreader.net/app/SurveyAppCustomer.php";
+  List<consumerData> Data1 = [];
+  Future? objfutur;
+  String? Status;
+  Future<model_consumer> ConsumerApiCalling(
+    String consumerno,
+  ) async {
+    model_consumer? objmodel_consumer;
+    var response = await http.post(Uri.parse(url),
+        body: {"consumer_no": consumerno, "branchcode": "12"});
+
+    if (response.statusCode == 200) {
+      try {
+        var data = json.decode(response.body);
+        objmodel_consumer = model_consumer.fromJson(data);
+        print(response.body);
+        if (objmodel_consumer.status == "true") {
+          for (int i = 0; i < objmodel_consumer.consumerDetails!.length; i++) {
+            consumerDetails!.add(objmodel_consumer.consumerDetails![i]);
+          }
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailsPage(
+                        consuno: _consumer.text,
+                        objcosudata: consumerDetails![0],
+                        houseNo: widget.houseno,
+                        needconnection: widget.isjalacustomer,
+                        isjalacustomer: widget.needconnection,
+                      )));
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+    return objmodel_consumer!;
+  }
 
   final _consumer = TextEditingController();
   final formkey1 = GlobalKey<FormState>();
@@ -66,7 +125,6 @@ class _ConsumerPageState extends State<ConsumerPage> {
                         width: 180,
                         height: 60,
                         child: TextFormField(
-
                           validator: (value1) {
                             if (value1!.isEmpty) {
                               return "Please Enter Consumer No";
@@ -77,7 +135,6 @@ class _ConsumerPageState extends State<ConsumerPage> {
                           cursorHeight: 30,
                           controller: _consumer,
                           decoration: InputDecoration(
-
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: Colors.blueGrey,
@@ -118,10 +175,7 @@ class _ConsumerPageState extends State<ConsumerPage> {
                             //color: Colors.lightBlueAccent,
                             onPressed: () {
                               if (formkey1.currentState!.validate()) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => DetailsPage2()));
+                                consumercall(_consumer.text);
                               }
                             },
                             child: Text(
