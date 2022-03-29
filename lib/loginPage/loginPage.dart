@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smsurvay/Api/BGApi.dart';
 
-
 import 'package:smsurvay/Api/panchayath.dart';
 import 'package:smsurvay/Ui/homePage/homePage.dart';
 import 'package:http/http.dart' as http;
@@ -79,6 +78,7 @@ class _loginPageState extends State<loginPage> {
         print(response.body);
         Status = objmodel_BG.status;
         setState(() {
+          BGdata!.clear();
           if (objmodel_BG!.status == "true") {
             for (int i = 0; i < objmodel_BG.data!.length; i++) {
               BGdata!.add(objmodel_BG.data![i]);
@@ -250,10 +250,10 @@ class _loginPageState extends State<loginPage> {
                                                   )),
                                                   onChanged: (value2) {
                                                     setState(() {
-                                                      var k = value2;
+                                                      var n = value2;
                                                     });
                                                   },
-                                                  items: BGdata!.map((e) {
+                                                  items: BGdata?.map((e) {
                                                     return DropdownMenuItem(
                                                         value: e.name,
                                                         child: Container(
@@ -264,6 +264,7 @@ class _loginPageState extends State<loginPage> {
                                                           ),
                                                         ));
                                                   }).toList(),
+
                                                 ),
                                               )
                                             ],
@@ -312,7 +313,7 @@ class _loginPageState extends State<loginPage> {
                                   print("Empty!");
                                 }
                                 if (formkey2.currentState!.validate()) {
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => HomePage()));

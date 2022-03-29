@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
+import 'modelSaveClass.dart';
+
 saveApi(
-    {houseNo,
+    {branchcode,
+    houseNo,
     IsjalanidhiCustomer,
     NeedConnection,
     consumer_no,
@@ -19,11 +22,12 @@ saveApi(
     balance_amount,
     Complaint,
     Remarks}) async {
-  Response response = await http.post(
+  var response = await http.post(
       Uri.parse("https://smreader.net/app/SurveyAppCustomerSave.php"),
-      body:({
+      body: ({
+        "branchcode": "12",
         "House_no": houseNo,
-        "IsjalanidhiCustomer": IsjalanidhiCustomer,
+        "IsjalanidhiCustomer":"1",
         "NeedConnection": NeedConnection,
         "consumer_no": consumer_no,
         "name": name,
@@ -38,9 +42,15 @@ saveApi(
         "Complaint": Complaint,
         "Remarks": Remarks,
       }));
-  if(response.statusCode == 200){
-    return json.decode(response.body);
+  if (response.statusCode == 200) {
+    //  return json.decode(response.body);
+    var k = json.decode(response.body);
+    model_save? objmodel_save = model_save.fromJson(k);
+    var status = objmodel_save.status;
+    if (status == "True") {
+      print("data saved");
+    } else {
+      print("data not saved");
+    }
   }
-  else
-    print(response.statusCode.toString()+"failed");
 }
