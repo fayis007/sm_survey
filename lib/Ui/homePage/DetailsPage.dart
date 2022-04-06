@@ -32,11 +32,12 @@ class _DetailsPageState extends State<DetailsPage> {
   String dropdownvalue = "Select Complaint";
   var items = [
     'Select Complaint',
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
+    'NO WATER',
+    'NO METER',
+    'METER IN MUD',
+    'METER DAMAGE',
+    'WATER LEAKAGE',
+    'PIPE DAMAGE',
   ];
 
   initState() {
@@ -44,12 +45,12 @@ class _DetailsPageState extends State<DetailsPage> {
     String? x = widget.consuno;
   }
 
-  DateTime date = DateTime(2000, 1, 10);
+  DateTime date = DateTime(2022, 4, 6);
   final _wardController = TextEditingController();
   final _meterController = TextEditingController();
   final _meterReadingController = TextEditingController();
   final _balanceAmountCntlr = TextEditingController();
-  final _remarkctrl = TextEditingController();
+  final _AmountPaidctrl = TextEditingController();
   final _mobilectrl = TextEditingController();
   final _whatsAppctrl = TextEditingController();
   final _namectrlr = TextEditingController();
@@ -101,7 +102,6 @@ class _DetailsPageState extends State<DetailsPage> {
                     width: 320,
                     height: 50,
                     child: TextFormField(
-
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 26),
                       cursorHeight: 30,
@@ -145,7 +145,6 @@ class _DetailsPageState extends State<DetailsPage> {
                     width: 320,
                     height: 100,
                     child: TextFormField(
-
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 26),
                       cursorHeight: 30,
@@ -273,7 +272,6 @@ class _DetailsPageState extends State<DetailsPage> {
                     width: 320,
                     height: 50,
                     child: TextFormField(
-
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 26),
                       cursorHeight: 30,
@@ -314,6 +312,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     width: 320,
                     height: 50,
                     child: TextFormField(
+                      keyboardType: TextInputType.number,
                       validator: (value_save) {
                         if (value_save!.isEmpty) {
                           return "Please Enter Meter No";
@@ -359,6 +358,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     width: 320,
                     height: 50,
                     child: TextFormField(
+                      keyboardType: TextInputType.number,
                       validator: (value_save) {
                         if (value_save!.isEmpty) {
                           return "Please Enter Meter Reading";
@@ -390,6 +390,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   SizedBox(
                     height: 20,
                   ),
+
                   Text(
                     "Last Reading Date",
                     style:
@@ -398,38 +399,34 @@ class _DetailsPageState extends State<DetailsPage> {
                   Container(
                     height: 50,
                     width: 320,
-                    child: TextFormField(
-                      validator: (value_save) {
-                        if (value_save!.isEmpty) {
-                          return "Please Enter Date";
-                        }
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.blueGrey,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                    child: RaisedButton(
+                      elevation: 0,
+                      onPressed: () async {
+                        DateTime? newDate = await showDatePicker(
+                            context: context,
+                            initialDate: date,
+                            firstDate: DateTime(1900),
+                            lastDate: DateTime(2100));
+                        if (newDate == null) return;
+                        setState(() => date = newDate);
                       },
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 26),
-                      cursorHeight: 30,
-                      controller: _datecontrlr,
-                      decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(15.0),
-                            ),
-                            borderSide: BorderSide(
-                              color: Colors.blueGrey,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: const BorderRadius.all(
-                              const Radius.circular(15.0),
-                            ),
-                            borderSide: BorderSide(
-                              color: Colors.blueGrey,
-                            ),
-                          )),
+                      child: Text(
+                        '${date.year}/${date.month}/${date.day}',
+                        style: TextStyle(color: Colors.black, fontSize: 17),
+                      ),
                     ),
                   ),
+
                   SizedBox(
                     height: 20,
                   ),
+
                   Text(
                     "Balance Amount",
                     style:
@@ -439,6 +436,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     width: 320,
                     height: 50,
                     child: TextFormField(
+                      keyboardType: TextInputType.number,
                       validator: (value_save) {
                         if (value_save!.isEmpty) {
                           return "Please Enter Balence Amount";
@@ -470,65 +468,22 @@ class _DetailsPageState extends State<DetailsPage> {
                   SizedBox(
                     height: 20,
                   ),
+
                   Text(
-                    "Complaint",
+                    "Amount Paid",
                     style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5),
-                  ),
-                  Container(
-                    padding:
-                        EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-                    height: 50,
-                    width: 320,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.blueGrey,
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          DropdownButton(
-                            underline: SizedBox(),
-                            value: dropdownvalue,
-
-                            // Down Arrow Icon
-                            icon:
-                                Image.asset("assets/icons/SelectComplaint.png"),
-
-                            items: items.map((String items) {
-                              return DropdownMenuItem(
-                                value: items,
-                                child: Text(items),
-                              );
-                            }).toList(),
-
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                dropdownvalue = newValue!;
-                                var complaint = dropdownvalue;
-                              });
-                            },
-                          ),
-                        ]),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Remark",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5),
+                    TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5),
                   ),
 
                   Container(
                     width: 320,
                     height: 50,
                     child: TextField(
+                      keyboardType: TextInputType.number,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 26),
                       cursorHeight: 30,
-                      controller: _remarkctrl,
+                      controller: _AmountPaidctrl,
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: const BorderRadius.all(
@@ -548,6 +503,62 @@ class _DetailsPageState extends State<DetailsPage> {
                           )),
                     ),
                   ),
+
+
+                  SizedBox(
+                    height: 20,
+                  ),
+
+                  Text(
+                    "Complaint",
+                    style:
+                    TextStyle(fontWeight: FontWeight.bold, fontSize: 17.5),
+                  ),
+
+
+
+                  Container(
+                    padding:
+                        EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+                    height: 50,
+                    width: 320,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.blueGrey,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                    child: DropdownButton(
+                      alignment: AlignmentDirectional.topEnd,
+                      underline: SizedBox(),
+                      value: dropdownvalue,
+                      hint: Text(
+                        "Complaint",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 17.5),
+                      ),
+                      // Down Arrow Icon
+                      icon:
+                          Image.asset("assets/icons/SelectComplaint.png"),
+isExpanded: true,
+                      items: items.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownvalue = newValue!;
+                          var complaint = dropdownvalue;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+
                   SizedBox(height: 70),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -587,10 +598,10 @@ class _DetailsPageState extends State<DetailsPage> {
                                 meter_number: _meterController.text,
                                 NeedConnection: widget.needconnection,
                                 opening_reading: _meterReadingController.text,
-                                lastreadingDate: _datecontrlr.text,
+                                lastreadingDate: date.toString(),
                                 balance_amount: _balanceAmountCntlr.text,
                                 Complaint: dropdownvalue,
-                                Remarks: _remarkctrl.text,
+                                Remarks: _AmountPaidctrl.text,
                               );
                               if (formkey_save.currentState!.validate()) {
                                 Navigator.pushReplacement(

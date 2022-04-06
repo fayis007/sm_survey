@@ -212,64 +212,6 @@ class _loginPageState extends State<loginPage> {
                                         const SizedBox(
                                           height: 30,
                                         ),
-                                        Container(
-                                          padding: EdgeInsets.only(
-                                            left: 10,
-                                            right: 5,
-                                          ),
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Colors.black87,
-                                              ),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15))),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: DropdownButtonFormField<
-                                                    dynamic>(
-                                                  validator: (value) {
-                                                    if (value.isEmpty) {
-                                                      return "Please Enter BG No";
-                                                    }
-                                                  },
-                                                  hint: Text(
-                                                    "Select BG",
-                                                    style: TextStyle(
-                                                        fontSize: 17.5,
-                                                        color: Colors.black),
-                                                  ),
-                                                  icon: (Image.asset(
-                                                    "assets/icons/SelectComplaint.png",
-                                                    fit: BoxFit.cover,
-                                                    height: 30,
-                                                    width: 30,
-                                                  )),
-                                                  onChanged: (value2) {
-                                                    setState(() {
-                                                      var n = value2;
-                                                    });
-                                                  },
-                                                  items: BGdata?.map((e) {
-                                                    return DropdownMenuItem(
-                                                        value: e.name,
-                                                        child: Container(
-                                                          child: Column(
-                                                            children: [
-                                                              Text(e.name!),
-                                                            ],
-                                                          ),
-                                                        ));
-                                                  }).toList(),
-
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
                                         const SizedBox(
                                           height: 75,
                                         ),
@@ -299,15 +241,13 @@ class _loginPageState extends State<loginPage> {
                                       new BorderRadius.circular(30.0)),
                               //color: Colors.lightBlueAccent,
                               onPressed: () {
-                                BgAPICalling("1");
-                                if (Userdata[0].name!.length != 0) {
-                                  if (BGdata![0].id!.length != 0) {
+                                //BgAPICalling("1");
+                                if (Userdata[0].name!.isNotEmpty) {
+                                  if (formkey2.currentState!.validate()) {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => HomePage()));
-                                  } else {
-                                    print("Empty!");
                                   }
                                 } else {
                                   print("Empty!");
